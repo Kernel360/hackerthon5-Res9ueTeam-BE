@@ -9,16 +9,31 @@
 ### domain 아래 본인의 디렉토리(e.g. expenses)에 사용하실 디렉토리를 생성
 ### 해당 디렉토리의 아래와 구조로 작업
 ```
-└── expenses
-    ├── controller
-    │   └── ExpenseController.java
-    ├── service
-    │   └── ExpenseService.java
-    ├── repository
-    │   └── ExpenseRepository.java
-    ├── entity
-    │   └── Expense.java
-    └── dto
-        ├── ExpenseRequestDto.java
-        └── ExpenseResponseDto.java
+├── controller
+│   └── ExpenseController.java
+│   └── ***Controller.java
+├── service
+│   └── ExpenseService.java
+│   └── ***Service.java
+├── repository
+│   └── ExpenseRepository.java
+│   └── ***Repository.java
+├── entity
+│   └── Expense.java
+│   └── ***.java
+└── dto
+    ├── ExpenseRequestDto.java
+    ├── ExpenseResponseDto.java
+    ├── ***RequestDto.java
+    └── ***ResponseDto.java
+```
+
+### Auditing 사용법
+### Entity에서 extends BaseTimeEntity 추가
+```
+// Auditing 예제
+@Entity
+public class Expense extends BaseTimeEntity {
+    // createdAt, updatedAt 필드 자동 포함됨
+}
 ```
