@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: local # local ?? ? ?? DB ??(README.md ??)
+
+server:
+  port: 8080
