@@ -22,8 +22,8 @@ jobs: # 임의의 값을 넣은것이므로 변경 가능
           java-version: 17
 
       # yml 파일을 GitHub Secrets 에서 가져와 생성 / Secrets 에서 값 생성하기
-      - name: application.yml 파일 만들기
-        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
+#      - name: application.yml 파일 만들기
+#        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
 
       # gradlew 실행 권한 부여 (Linux에서 필요함)
       # 리눅스 환경에서 gradlew 는 실행 권한이 없으면 실행 불가하므로 이건 필수적인 셋업
