@@ -33,7 +33,7 @@ public class LoginController {
         log.info("세션 로그인 사용자 ID: {}", loginUserId);
         log.info("세션 로그인 사용자 닉네임: {}", loginUserNickname);
 
-        LoginResponseDto loginDto = new LoginResponseDto(loginResponseDto.getId(), loginResponseDto.getNickname(), loginUserId.toString());
+        LoginResponseDto loginDto = new LoginResponseDto(loginResponseDto.getId(), loginResponseDto.getNickname());
 
         return ResponseEntity.ok().body(loginDto);
     }
