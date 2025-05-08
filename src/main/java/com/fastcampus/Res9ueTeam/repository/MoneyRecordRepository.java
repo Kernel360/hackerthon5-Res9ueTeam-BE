@@ -8,4 +8,5 @@ import java.util.List;
 public interface MoneyRecordRepository extends JpaRepository<MoneyRecord, Long> {
 
     List<MoneyRecord> findByUserId(Long userId);
+    List<MoneyRecord> findByUserId2(Long userId);
 }
