@@ -15,4 +15,6 @@ public interface MoneyRecordRepository extends JpaRepository<MoneyRecord, Long> 
     List<MoneyRecord> findByUserAndTypeAndDateRange(
             @Param("userId") Long userId
     );
+  
+    List<MoneyRecord> findByUserId(Long userId);
 }
