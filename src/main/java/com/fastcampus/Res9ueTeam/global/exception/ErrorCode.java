@@ -1,9 +1,7 @@
 package com.fastcampus.Res9ueTeam.global.exception;
 
 public enum ErrorCode {
-    INVALID_INPUT(400, "잘못된 요청입니다."),
-    NOT_FOUND(404, "데이터를 찾을 수 없습니다."),
-    INTERNAL_SERVER_ERROR(500, "서버 오류가 발생했습니다.");
+    DUPLICATE_EMAIL_EXCEPTION(409, "이미 존재하는 이메일입니다.");
 
     private final int status;
     private final String message;
