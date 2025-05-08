@@ -3,7 +3,7 @@ name: hackerthon5-Res9ueTeam
 on:
   push:
     branches:
-      - "sookhyeon/cicd"
+      - "sookhyeon/cicd2"
 
 jobs: # 임의의 값을 넣은것이므로 변경 가능
   build: # job 이름은 build 가 아니여도 됨, 변경 가능
