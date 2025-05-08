@@ -1,6 +1,24 @@
 spring:
-  profiles:
-    active: local # local ?? ? ?? DB ??(README.md ??)
+  datasource:
+    url: jdbc:mysql://localhost:3306/hackerthon
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-server:
-  port: 8080
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect  # Hibernate가 MySQL을 인식할 수 있도록 추가
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# swagger 사용 여부 (기본값: true)
+springdoc:
+  swagger-ui:
+    enabled: true
+
+# 로깅 설정 (디버깅용)
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
