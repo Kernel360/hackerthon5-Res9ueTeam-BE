@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
+                .cors(Customizer.withDefaults()) // 위에서 만든 CorsConfig 적용
                 .csrf(AbstractHttpConfigurer::disable) // CSRF를 명시적으로 끄기
                 // .csrf(Customizer.withDefaults()) // CSRF 설정을 기본으로 둠 (비활성화하려면 따로 설정)
                 .build();
