@@ -2,7 +2,7 @@ package com.fastcampus.Res9ueTeam.entity;
 
 import com.fastcampus.Res9ueTeam.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
