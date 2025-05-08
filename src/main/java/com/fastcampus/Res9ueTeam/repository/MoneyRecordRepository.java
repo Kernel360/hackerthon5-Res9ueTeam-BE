@@ -12,7 +12,6 @@ import java.util.List;
 public interface MoneyRecordRepository extends JpaRepository<MoneyRecord, Long> {
 
     @Query("SELECT m FROM MoneyRecord m WHERE m.userId = :userId")
-
     List<MoneyRecord> findByUserAndTypeAndDateRange(
             @Param("userId") Long userId
     );

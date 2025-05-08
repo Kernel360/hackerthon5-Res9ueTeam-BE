@@ -2,12 +2,18 @@ package com.fastcampus.Res9ueTeam.entity;
 
 import com.fastcampus.Res9ueTeam.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Goal extends BaseTimeEntity {
 
     @Id
@@ -23,4 +29,5 @@ public class Goal extends BaseTimeEntity {
     private String resolution;
 
     private LocalDate goalDate;
+
 }
