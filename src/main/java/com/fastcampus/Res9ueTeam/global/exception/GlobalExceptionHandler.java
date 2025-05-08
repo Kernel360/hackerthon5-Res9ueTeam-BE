@@ -16,6 +16,13 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(code));
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity
+                .status(400) // 또는 401, 403 등 적절한 상태
+                .body(new ErrorResponse(400, ex.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         return ResponseEntity
