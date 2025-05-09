@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/hackathon
-    username: ${DB_USER:root}
-    password: ${DB_PASSWORD:root}
+    username: root
+    password: Q12341234!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
