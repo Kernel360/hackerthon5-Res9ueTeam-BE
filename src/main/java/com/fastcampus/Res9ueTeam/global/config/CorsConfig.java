@@ -15,6 +15,7 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("https://hackerthon5-res9ue-team-fe.vercel.app")); // 허용할 Origin
+        config.setAllowedOrigins(List.of("http://localhost:3000")); // 허용할 Origin
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP Method
         config.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         config.setAllowCredentials(true); // 인증 정보 허용 (ex. 쿠키)
