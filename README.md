@@ -16,6 +16,8 @@ Res9ue Team의 개인 지출 관리서비스 paylog 는 개인의 재정 상태�
 ## ERD
 <img width="829" alt="스크린샷 2025-05-09 오전 11 16 31" src="https://github.com/user-attachments/assets/22b2b40e-8984-4b12-89f3-a37a0abb4ab0" />
 
+## 와이어프레임
+https://docs.google.com/presentation/d/1_WrHlgVfzsGPOvOLiX3fcW49o77jRFrEaQY-C-p8giE/edit?slide=id.g3559da418c2_0_0#slide=id.g3559da418c2_0_0
 
 ## Local 환경 설정 (application-local.yml)
 - application-local-template.yml 파일을 복사해서 application-local.yml을 생성하세요.
