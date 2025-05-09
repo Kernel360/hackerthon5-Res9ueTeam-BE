@@ -1,0 +1,80 @@
+name: hackerthon5-Res9ueTeam
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs: # 임의의 값을 넣은것이므로 변경 가능
+  build: # job 이름은 build 가 아니여도 됨, 변경 가능
+    runs-on: ubuntu-latest # 우분투 최신버전에서 실행
+
+    steps:
+      # GitHub 레포지토리의 소스코드를 runner 에 체크아웃
+      - name: Github Repository 파일 불러오기
+        uses: actions/checkout@v4 # 변경 가능 임의로 넣음
+
+      # JDK 17 설치 (빌드 및 실행을 위한 환경 세팅)
+      - name: JDK 17 버전 설치 진행
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin # AdoptOpenJDK의 Temurin 배포판 사용
+          java-version: 17
+
+      # yml 파일을 GitHub Secrets 에서 가져와 생성 / Secrets 에서 값 생성하기
+#      - name: application.yml 파일 만들기
+#        run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
+
+      # gradlew 실행 권한 부여 (Linux에서 필요함)
+      # 리눅스 환경에서 gradlew 는 실행 권한이 없으면 실행 불가하므로 이건 필수적인 셋업
+      - name: gradlew 권한 주기
+        run: chmod +x ./gradlew
+
+      # 프로젝트 빌드
+      # -x test 옵션은 테스트 코드를 실행하지 않고 빌드함. 빠른 배포를 위한 설정인데, 실제 운영환경에선 테스트 포함 여부 판단 필요
+      - name: 테스트 및 빌드하기
+        run: ./gradlew clean build -x test
+
+      # 생성된 JAR 파일명을 명시적으로 project.jar로 변경
+      # build/libs에 있는 JAR는 보통 project-0.0.1-SNAPSHOT.jar 이런 식이므로 EC2에 전송하기 위해 이름을 단순화
+      - name: 빌드된 파일 이름 변경
+        run: mv ./build/libs/*SNAPSHOT.jar ./project.jar
+
+      # -------------------------------------------------------------------
+      # SCP(Secure Copy)를 사용해 EC2에 JAR 파일 업로드
+      # 0508 17:15 포트 22 (SSH) (0))
+      - name: SCP로 EC2에 빌드된 파일 전송
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: project.jar
+          target: /home/ec2-user/hackerthon/tobe
+
+      # SSH로 EC2에 접속하여 배포 및 서버 재시작
+      # 기존 서버 종료 후 재시작. nohup은 백그라운드 실행, 로그는 output.log로 저장
+      - name: SSH로 EC2 접속하기
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script_stop: true
+          script: |
+            # 기존 current 디렉토리 삭제 및 재생성
+            rm -rf /home/ec2-user/hackerthon/current
+            mkdir /home/ec2-user/hackerthon/current
+            
+            # 새 JAR 파일 이동
+            mv /home/ec2-user/hackerthon/tobe/project.jar /home/ec2-user/hackerthon/current/project.jar
+            
+            # 기존 8080 포트 사용 중인 프로세스 종료
+            sudo fuser -k -n tcp 8080 || true
+            
+            # 절대 경로로 java 실행
+            cd /home/ec2-user/hackerthon/current
+            sudo nohup /usr/lib/jvm/java-17-amazon-corretto/bin/java -jar project.jar > ./output.log 2>&1 &
+            
+            # 임시 폴더 삭제
+            rm -rf /home/ec2-user/hackerthon/tobe
