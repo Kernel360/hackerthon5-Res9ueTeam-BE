@@ -14,6 +14,7 @@ public class MoneyRecord extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long userId;
 
     @Enumerated(EnumType.STRING)

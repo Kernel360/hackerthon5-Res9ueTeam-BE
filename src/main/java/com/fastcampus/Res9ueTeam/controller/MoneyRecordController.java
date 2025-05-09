@@ -9,6 +9,7 @@ import com.fastcampus.Res9ueTeam.service.MoneyRecordService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,15 @@ public class MoneyRecordController {
                 user_id, amount, category, category_type, payment_type, record_date); //
 
         return moneyRecordService.getPayment(moneyRecordRequestDto);
+    }
+
+    @GetMapping("/monthly")
+    public ResponseEntity<List<MoneyRecordResponseDto>> getMonthlyPayment(
+            @RequestParam Long user_id,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate record_date
+    ) {
+        List<MoneyRecordResponseDto> result = moneyRecordService.getMonthlyRecord(user_id, record_date);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/post")

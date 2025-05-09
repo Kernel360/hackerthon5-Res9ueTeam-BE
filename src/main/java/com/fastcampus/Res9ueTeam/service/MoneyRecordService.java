@@ -30,6 +30,16 @@ public class MoneyRecordService {
                 .toList();
     }
 
+    public List<MoneyRecordResponseDto> getMonthlyRecord(Long userId, LocalDate recordDate){
+        LocalDate startOfMonth = recordDate.withDayOfMonth(1);
+        LocalDate endOfMonth = recordDate.withDayOfMonth(recordDate.lengthOfMonth());
+
+        List<MoneyRecord> records = moneyRecordRepository.findByUserIdAndIdInMonth(userId, startOfMonth, endOfMonth);
+        return records.stream()
+                .map(MoneyRecordResponseDto::from)
+                .toList();
+    }
+
     @Transactional
     public void savePayment(MoneyRecordRequestDto dto) {
         MoneyRecord moneyRecord = new MoneyRecord(
